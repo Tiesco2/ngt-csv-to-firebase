@@ -1,0 +1,18 @@
+{
+  "name": "next_gate_tech_dashboard",
+  "version": "1.0.0",
+  "description": "csv parser for next gate tech",
+  "main": "index.js",
+  "dependencies": {
+    "csv": "^5.3.2",
+    "bower": "^1.8.8",
+    "papaparse": "^5.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start" : "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "doumbia tiekoura",
+  "license": "ISC"
+}
