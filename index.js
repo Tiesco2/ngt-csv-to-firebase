@@ -1,6 +1,21 @@
-console.log('hello titi');
+var firebase = require("firebase");
+
+var serviceAccount = require("./serviceAccountKey.json");
+
+firebase.initializeApp({
+  serviceAccount,
+  databaseURL: "https://next-gate-tech-test-e33f2.firebaseio.com"
+});
 const parse = require ('csv-parse');
 const fs = require ('fs');
+/**
+* Loading Firebase Database and refering 
+* to user_data Object from the Database
+*/
+var db = firebase.database();
+var ref = db.ref("/asset_data");  //Set the current directory you are working in
+
+
 
 const csvData = [];
 fs.createReadStream(__dirname + '/tests_data.csv')
@@ -15,13 +30,13 @@ fs.createReadStream(__dirname + '/tests_data.csv')
 .on('end' , function (){
   const column = csvData[0];
   const correspondColumn = {};
-  for (let j=0; j < column.length; j++) {
+  for (let j=0; j<column.length; j++) {
     if (column[j] !== undefined) {
       correspondColumn[j] = column[j]
     }
   }
   const dataForFirebase = []
-  for (let i = 1; i < csvData.length; i++ ) {
+  for (let i=1; i<60000; i++ ) {
     let row = csvData[i];
     let newObject = {}
     for (let j=0; j < row.length; j++) {
@@ -32,4 +47,8 @@ fs.createReadStream(__dirname + '/tests_data.csv')
     dataForFirebase.push(newObject);
   }          
   console.log(dataForFirebase);
+  /**
+  * Setting Data Object Value
+  */
+  ref.set(dataForFirebase);
 });
