@@ -36,6 +36,7 @@ fs.createReadStream(__dirname + '/tests_data.csv')
     }
   }
   const dataForFirebase = []
+  const secondArrays =[]
   for (let i=1; i<60000; i++ ) {
     let row = csvData[i];
     let newObject = {}
@@ -45,8 +46,10 @@ fs.createReadStream(__dirname + '/tests_data.csv')
       }
     }
     dataForFirebase.push(newObject);
+    const secondArrays = dataForFirebase.splice(52000,51247);
   }          
   console.log(dataForFirebase);
+  console.log(secondArrays);
   /**
   * Setting Data Object Value
   */
