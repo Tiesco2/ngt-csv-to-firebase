@@ -1,10 +1,11 @@
 var firebase = require("firebase");
+var moment = require('moment');
 
 var serviceAccount = require("./serviceAccountKey.json");
 
 firebase.initializeApp({
   serviceAccount,
-  databaseURL: "https://next-gate-tech-test-e33f2.firebaseio.com"
+  databaseURL: "https://next-gate-t-new-bdd.firebaseio.com/"
 });
 const parse = require ('csv-parse');
 const fs = require ('fs');
@@ -36,20 +37,27 @@ fs.createReadStream(__dirname + '/tests_data.csv')
     }
   }
   const dataForFirebase = []
-  const secondArrays =[]
   for (let i=1; i<60000; i++ ) {
     let row = csvData[i];
     let newObject = {}
     for (let j=0; j < row.length; j++) {
       if (row[j] !== undefined) {
-        newObject[correspondColumn[j]] = row[j]
+        let value = row[j]
+        if(j===7) {
+          console.log(row[j]);
+          let date = moment(value)
+          console.log(date.unix());
+          value=date.unix();
+        }
+        newObject[correspondColumn[j]] = value
       }
     }
     dataForFirebase.push(newObject);
-    const secondArrays = dataForFirebase.splice(52000,51247);
-  }          
-  console.log(dataForFirebase);
-  console.log(secondArrays);
+  }    
+  const secondArrays = dataForFirebase.splice(60000,43247);    
+  // boucler sur sencondArrays et envoyer chaque array de la boucle par firebase  
+  //console.log(dataForFirebase);
+  //console.log(secondArrays);
   /**
   * Setting Data Object Value
   */
